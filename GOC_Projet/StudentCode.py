@@ -76,7 +76,7 @@ print(layout,fitness(layout))
 
 ###### A faire : un algo d'optimisation qui minimise la fonction fitness,
 ###### fonction qui accepte en entrée :
-###### une liste de n parmi m (n<=m) entier deux à deux distinct
+###### une liste de n parmi m (n<=m) entiers deux à deux distincts
 
 
 
