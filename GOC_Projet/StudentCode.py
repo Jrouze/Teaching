@@ -59,17 +59,24 @@ def instance_selection(instance_num):
 ##     Pour choisir une instance: 
 ##     Modifier instance_num ET RIEN D'AUTRE    
 ##-------------------------------------------------------
-instance_num=5
+instance_num=0
+
 backend_name,circuit_type,num_qubit=instance_selection(instance_num)
 backend,qc,qr=instance_characteristic(backend_name,circuit_type,num_qubit)
 
 n=num_qubit
 m=backend.num_qubits
 
+##-------------------------------------------------------
+##     A vous de jouer !  
+##-------------------------------------------------------
 ###### Un dummy test, juste pour voir que ça marche.
 layout=np.random.choice(m,n,False)
 print(layout,fitness(layout))
 
+###### A faire : un algo d'optimisation qui minimise la fonction fitness,
+###### fonction qui accepte en entrée :
+###### une liste de n parmi m (n<=m) entier deux à deux distinct
 
 
 
