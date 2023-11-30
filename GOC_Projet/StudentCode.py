@@ -37,29 +37,47 @@ def instance_characteristic(backend_name,circuit_type,num_qubit):
         backend = FakeWashingtonV2()
         
     l=f"{circuit_type}_indep_qiskit_{num_qubit}"
-    qasmfile=f".\{l.rstrip()}.qasm"
+    qasmfile=f".\Instances\{l.rstrip()}.qasm"
     qc=QuantumCircuit().from_qasm_file(qasmfile)
     qr=qc.qregs[0]
     
     return backend,qc,qr
 
-backend_list = ["Singapore","Cairo","Washington"]
-circuit_list = ["ghz","dj","qaoa"]
 def instance_selection(instance_num):
-    if instance_num==0:
-        return backend_list[0],circuit_list[0],5
+    if instance_num==1:
+        return "Cairo","ghzall",20
+    elif instance_num==2:
+        return "Wash","ghzall",20
+    elif instance_num==3:
+        return "Cairo","ghzall",27
+    elif instance_num==4:
+        return "Wash","ghzall",27
+    elif instance_num==5:
+        return "Wash","dj",20
+    elif instance_num==6:
+        return "Cairo","dj",27
+    elif instance_num==7:
+        return "Wash","ghz",20
+    elif instance_num==8:
+        return "Wash","ghz",27    
+    elif instance_num==9:
+        return "Cairo","qaoa",14
+    elif instance_num==11:
+        return "Singapore","ghzall",19
+    elif instance_num==12:
+        return "Singapore","dj",19
     elif instance_num==1:
-        return backend_list[0],circuit_list[2],8
+        return "Cairo","ghz",19
     else:
-        print("Choix d'une instance inexistance, instance par défaut revoyé")
-        return backend_list[0],circuit_list[0],5
+        print("Choix d'une instance inexistance, instance 1 revoyé  par défaut")
+        return "Cairo","ghzall",20
 
 
 ##-------------------------------------------------------
 ##     Pour choisir une instance: 
 ##     Modifier instance_num ET RIEN D'AUTRE    
 ##-------------------------------------------------------
-instance_num=1
+instance_num=1     #### Entre 1 et 9 inclue
 
 backend_name,circuit_type,num_qubit=instance_selection(instance_num)
 backend,qc,qr=instance_characteristic(backend_name,circuit_type,num_qubit)
@@ -70,21 +88,13 @@ m=backend.num_qubits
 ##-------------------------------------------------------
 ##     A vous de jouer !  
 ##-------------------------------------------------------
-###### Un dummy test, juste pour voir que ça marche.
-fitmin=10E10
-for k in range(10):
-    layout=np.random.choice(m,n,False)
-    fit=fitness(layout)
-    if fit<fitmin:
-        fitmin=fit
-        layout_best=layout    
-    print(layout,fit)
-print(f"Best layout found is {layout_best}, with a fitness of {fitmin}")
+
+###### Votre code ici
 
 ###### A faire : un algo d'optimisation qui minimise la fonction fitness,
 ###### fonction qui accepte en entrée :
 ###### une liste de n parmi m (n<=m) entiers deux à deux distincts
-
+###### N'oubliez pas d'écrire la solution dans [GROUPE]_instance_[instance_num].txt
 
 
 
