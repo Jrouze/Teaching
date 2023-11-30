@@ -12,7 +12,7 @@ from qiskit.transpiler.preset_passmanagers import generate_preset_pass_manager
 from qiskit.providers.fake_provider import FakeSingaporeV2,FakeWashingtonV2,FakeCairoV2
 
 ##-------------------------------------------------------
-##     Definition de la fonction fitness à minimiser
+##     Definition de la fonction objetif à minimiser
 ##-------------------------------------------------------
 def fitness(layout):
     init_layout={qr[i]:layout[i] for i in range(len(layout))}
@@ -37,7 +37,7 @@ def instance_characteristic(backend_name,circuit_type,num_qubit):
         backend = FakeWashingtonV2()
         
     l=f"{circuit_type}_indep_qiskit_{num_qubit}"
-    qasmfile=f".\Instances\{l.rstrip()}.qasm"
+    qasmfile=f".\Instances\{l.rstrip()}.qasm"  ###### Il est possible de cette ligne soit problèmatique.
     qc=QuantumCircuit().from_qasm_file(qasmfile)
     qr=qc.qregs[0]
     
@@ -96,7 +96,23 @@ m=backend.num_qubits
 ###### une liste de n parmi m (n<=m) entiers deux à deux distincts
 ###### N'oubliez pas d'écrire la solution dans [GROUPE]_instance_[instance_num].txt
 
+###### /!\ Attention /!\
+###### Il est possible que la ligne 40 : qasmfile=f".\Instances\{l.rstrip()}.qasm"
+###### crée un problème à l'execution si le chemin n'est pas le bon,
+###### en particulier sous Linux. Essayer de la remplacer par
+###### qasmfile=f"./Instances/{l.rstrip()}.qasm". Cela devrait résoudre le problème.
 
+###### Voici un test (à supprimer !) pour s'assurer que tout vas bien
+for i in range(1,10):
+    instance_num=i     #### Entre 1 et 9 inclue
+
+    backend_name,circuit_type,num_qubit=instance_selection(instance_num)
+    backend,qc,qr=instance_characteristic(backend_name,circuit_type,num_qubit)
+
+    n=num_qubit
+    m=backend.num_qubits
+    r=fitness(list(range(n)))
+    print(f"n={n}, m={m} et fitness_test={r}. Instance {instance_num} ok !")
 
 
 
